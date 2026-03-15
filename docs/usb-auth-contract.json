@@ -1,0 +1,54 @@
+{
+  "description": "HTTP JSON contracts for USB 2FA (dashboard ↔ FastAPI). Session cookie required for all calls after login.",
+  "base_url_example": "http://127.0.0.1:8000",
+  "POST /api/auth/login": {
+    "request_body": {
+      "username": "string",
+      "password": "string"
+    },
+    "response_200": {
+      "success": true,
+      "message": "string",
+      "username": "string",
+      "requires_usb_2fa": "boolean — true → session has pending_2fa_user_id only"
+    }
+  },
+  "GET /api/auth/me": {
+    "response_200": {
+      "user_id": "integer",
+      "username": "string",
+      "auth_state": "authenticated | pending_usb_2fa",
+      "requires_usb_2fa": "boolean"
+    }
+  },
+  "POST /api/auth/usb/verify-token": {
+    "requires": "pending password session (pending_2fa_user_id cookie)",
+    "request_body": {
+      "token_hash_hex": "64-char lowercase hex — SHA-256(raw token.bin contents)"
+    },
+    "response_200": {
+      "challenge_hex": "64-char hex — 32 random bytes; client signs raw bytes via hex decode",
+      "expires_at": "ISO-8601 datetime"
+    }
+  },
+  "POST /api/auth/usb/verify-signature": {
+    "requires": "same pending session + prior verify-token must succeed",
+    "request_body": {
+      "signature_hex": "128-char hex — detached Ed25519 signature over bytes.fromhex(challenge_hex)"
+    },
+    "response_200": {
+      "success": true,
+      "message": "string",
+      "username": "string"
+    }
+  },
+  "POST /api/auth/logout": {
+    "response_200": { "success": true, "message": "string" }
+  },
+  "usb_bundle_layout": {
+    "mount_example_linux": "/media/$USER/$LABEL/auth/",
+    "files": ["key.enc", "token.bin", "salt.bin", "meta.json"],
+    "meta_json": { "user_id": "integer — must match pending session user_id" },
+    "key_enc_format": "12-byte nonce || AES-256-GCM ciphertext (includes 16-byte tag at end); matches dashboard/electron-main.js decrypt"
+  }
+}
