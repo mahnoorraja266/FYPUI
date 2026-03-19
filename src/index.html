@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://localhost:* http://127.0.0.1:*; script-src 'self'" />
+    <title>FYP Surveillance — Login</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <h1>Smart Surveillance System</h1>
+        <p class="sub">Operator login</p>
+      </header>
+
+      <section id="step-password" class="panel">
+        <h2>Step 1 — Username &amp; password</h2>
+        <label>API base URL <input type="text" id="apiBase" value="http://127.0.0.1:8000" /></label>
+        <label>Username <input type="text" id="username" autocomplete="username" /></label>
+        <label>Password <input type="password" id="password" autocomplete="current-password" /></label>
+        <button type="button" id="btnLogin">Login</button>
+        <p id="pwError" class="error" hidden></p>
+      </section>
+
+      <section id="step-usb" class="panel hidden">
+        <h2>Step 2 — USB second factor</h2>
+        <p id="usbStatus" class="status">Looking for enrolled USB mount…</p>
+        <div id="usbActions" class="hidden">
+          <p class="hint">Bundle found. Enter PIN to unlock the USB key.</p>
+          <label>PIN <input type="password" id="pin" autocomplete="off" /></label>
+          <button type="button" id="btnUsbContinue">Verify USB &amp; complete login</button>
+        </div>
+        <p id="usbError" class="error" hidden></p>
+        <button type="button" id="btnCancelUsb" class="secondary">Cancel / Log out</button>
+      </section>
+
+      <section id="step-done" class="panel hidden">
+        <h2>Logged in</h2>
+        <p id="doneMsg">Session ready. Open the full dashboard app here when wired to your UI shell.</p>
+        <button type="button" id="btnLogout">Logout</button>
+      </section>
+    </div>
+    <script type="module" src="login.js"></script>
+  </body>
+</html>

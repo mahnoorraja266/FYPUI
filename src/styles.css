@@ -1,0 +1,79 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: system-ui, Segoe UI, sans-serif;
+  background: #0f1419;
+  color: #e6edf3;
+}
+.shell {
+  max-width: 440px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+header h1 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+.sub {
+  color: #8b949e;
+  margin-top: 0.35rem;
+}
+.panel {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+}
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #30363d;
+  background: #0d1117;
+  color: #e6edf3;
+}
+button {
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #238636;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.secondary {
+  background: #30363d;
+  margin-top: 1rem;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.hidden {
+  display: none !important;
+}
+.error {
+  color: #f85149;
+  margin-top: 0.75rem;
+}
+.status {
+  color: #58a6ff;
+}
+.hint {
+  font-size: 0.9rem;
+  color: #8b949e;
+}
