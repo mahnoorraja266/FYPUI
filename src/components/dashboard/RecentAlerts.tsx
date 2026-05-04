@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Clock, User, Zap, CheckCircle } from 'lucide-react'
 
 interface Alert {
@@ -56,6 +57,7 @@ const INITIAL_ALERTS: Alert[] = [
 ]
 
 export default function RecentAlerts() {
+  const router = useRouter()
   const [alerts, setAlerts] = useState<Alert[]>(INITIAL_ALERTS)
 
   const handleMarkAsSeen = (id: string) => {
@@ -94,9 +96,13 @@ export default function RecentAlerts() {
             RECENT ALERTS
           </h2>
         </div>
-        <a href="#" className="text-xs font-bold uppercase hover:underline" style={{ color: '#3B82F6', fontFamily: 'Inter' }}>
+        <button
+          onClick={() => router.push('/alerts')}
+          className="text-xs font-bold uppercase hover:underline cursor-pointer bg-transparent border-none outline-none"
+          style={{ color: '#3B82F6', fontFamily: 'Inter' }}
+        >
           View All Alerts
-        </a>
+        </button>
       </div>
 
       {/* Table */}
