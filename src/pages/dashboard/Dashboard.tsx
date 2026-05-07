@@ -81,17 +81,6 @@ export default function Dashboard() {
 
         {/* System Status & Uptime */}
         <SystemStatus />
-
-        {/* Next Button */}
-        <div className="mt-8 flex justify-center">
-          <button
-            onClick={() => router.push('/dashboard')}
-            className="px-8 py-3 font-semibold rounded transition-colors"
-            style={{ backgroundColor: '#3B82F6', color: 'white' }}
-          >
-            Continue
-          </button>
-        </div>
       </main>
     </div>
   )
