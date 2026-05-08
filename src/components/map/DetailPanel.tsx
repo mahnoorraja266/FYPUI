@@ -1,5 +1,6 @@
 import { X, Video, Power, RotateCcw, AlertTriangle } from 'lucide-react'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import type { Camera } from '@/lib/data/cameras'
 
 interface DetailPanelProps {
@@ -8,6 +9,7 @@ interface DetailPanelProps {
 }
 
 export default function DetailPanel({ camera, onClose }: DetailPanelProps) {
+  const router = useRouter()
   const [faceModelEnabled, setFaceModelEnabled] = useState(camera.aiModels.faceModel)
   const [weaponModelEnabled, setWeaponModelEnabled] = useState(camera.aiModels.weaponModel)
 
@@ -21,6 +23,15 @@ export default function DetailPanel({ camera, onClose }: DetailPanelProps) {
 
   const handleViewLiveFeed = () => {
     console.log(`Viewing live feed for ${camera.name}`)
+    const mapping: Record<string, string> = {
+      'gate1': 'sec-001-alpha',
+      'gate2': 'sec-002-bravo',
+      'parkinga': 'sec-005-ext',
+      'lobbynorth': 'sec-012-main',
+    }
+    const deviceId = mapping[camera.id.toLowerCase()] || camera.id
+    localStorage.setItem('mapSelectedDeviceId', deviceId)
+    router.push('/live-feeds')
   }
 
   return (
@@ -183,9 +194,13 @@ export default function DetailPanel({ camera, onClose }: DetailPanelProps) {
         <p className="text-xs" style={{ color: '#94A3B8' }}>
           {camera.alerts.message}
         </p>
-        <a href="#" className="text-xs font-bold uppercase mt-3 inline-block" style={{ color: '#3B82F6' }}>
+        <button
+          onClick={() => router.push('/alerts')}
+          className="text-xs font-bold uppercase mt-3 inline-block text-left bg-transparent border-none outline-none cursor-pointer"
+          style={{ color: '#3B82F6' }}
+        >
           View Alerts →
-        </a>
+        </button>
       </div>
 
       {/* Action Buttons */}
