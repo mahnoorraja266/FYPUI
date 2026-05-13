@@ -34,6 +34,17 @@ export default function DeviceStreamTable({
   const [timeStr, setTimeStr] = useState('')
 
   useEffect(() => {
+    const mapSelectedDeviceId = localStorage.getItem('mapSelectedDeviceId')
+    if (mapSelectedDeviceId) {
+      const found = DEVICES.find(d => d.id === mapSelectedDeviceId)
+      if (found) {
+        setStream1(found)
+        localStorage.removeItem('mapSelectedDeviceId')
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     const updateTime = () => {
       const now = new Date()
       const pad = (n: number) => String(n).padStart(2, '0')
