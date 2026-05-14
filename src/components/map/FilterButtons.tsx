@@ -42,9 +42,6 @@ export default function MapFilterButtons({ activeFilter, onFilterChange }: MapFi
 
       {/* Right side controls */}
       <div className="ml-auto flex items-center gap-3 pr-4">
-        <span className="text-xs uppercase tracking-widest" style={{ color: '#94A3B8' }}>
-          Global Load: 42%
-        </span>
         <button
           className="p-1.5 rounded hover:bg-opacity-80 transition-colors"
           style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3B82F6' }}
