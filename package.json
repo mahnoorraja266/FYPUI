@@ -5,14 +5,26 @@
   "description": "Surveillance dashboard (Electron) — login + USB 2FA client",
   "main": "electron-main.js",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
     "start": "electron . --no-sandbox",
     "start:sandbox": "electron ."
   },
   "dependencies": {
     "@noble/ed25519": "^2.2.3",
-    "argon2": "^0.41.1"
+    "argon2": "^0.41.1",
+    "lucide-react": "^0.344.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "electron": "^28.3.3"
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "electron": "^28.3.3",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.4"
   }
 }

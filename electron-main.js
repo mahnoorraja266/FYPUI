@@ -121,17 +121,22 @@ function createWindow() {
       sandbox: false,
     },
   });
-  // loadFile("file://…") breaks Set-Cookie for /api (session); use same origin as API.
-  const url =
-    process.env.DASHBOARD_URL || "http://127.0.0.1:8000/operator/index.html";
-  win
-    .loadURL(url)
-    .catch((err) => {
+  const devUrl = "http://localhost:5173";
+  const distPath = path.join(__dirname, "dist", "index.html");
+
+  if (fs.existsSync(distPath)) {
+    win.loadFile(distPath).catch((err) => {
+      console.error("Failed to load built bundle:", err);
+    });
+  } else {
+    const url = process.env.DASHBOARD_URL || devUrl;
+    win.loadURL(url).catch((err) => {
       console.error(
-        "Load failed (start backend: uvicorn …, then retry):",
-        err?.message || err,
+        "Load failed. Start Vite dev server ('npm run dev') or compile the app ('npm run build'), then try again:",
+        err?.message || err
       );
     });
+  }
 }
 
 app.whenReady().then(() => {
