@@ -19,7 +19,6 @@ import DashboardSettingsModal from '@/components/settings/DashboardSettingsModal
 export default function DashboardSidebar() {
   const pathname = usePathname()
   const router = useRouter()
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
   const menuItems = [
     { icon: LayoutGrid, label: 'Dashboard', path: '/dashboard' },
@@ -29,11 +28,8 @@ export default function DashboardSidebar() {
     { icon: Smartphone, label: 'Devices', path: '/devices' },
     { icon: RotateCw, label: 'Sync Status', path: '/sync-status' },
     { icon: Monitor, label: 'Live Feed', path: '/live-feeds' },
+    { icon: Settings, label: 'Settings', path: '/settings' },
   ]
-
-  const handleSettingsClick = () => {
-    setIsSettingsOpen(true)
-  }
 
   return (
     <>
@@ -74,22 +70,6 @@ export default function DashboardSidebar() {
           })}
         </nav>
 
-        {/* Settings Button */}
-        <div className="px-3 py-2">
-          <button
-            onClick={handleSettingsClick}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded transition-all duration-200 cursor-pointer text-left"
-            style={{
-              backgroundColor: isSettingsOpen ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
-              color: isSettingsOpen ? '#3B82F6' : '#94A3B8',
-              borderRight: isSettingsOpen ? '4px solid #3B82F6' : 'none',
-            }}
-          >
-            <Settings size={20} />
-            <span className="text-sm font-medium tracking-wide">Settings</span>
-          </button>
-        </div>
-
         {/* User Profile */}
         <div className="mt-auto px-6 py-4 flex items-center gap-3 border-t" style={{ borderColor: '#24324A' }}>
           <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center overflow-hidden border" style={{ borderColor: '#24324A' }}>
@@ -105,9 +85,6 @@ export default function DashboardSidebar() {
           </div>
         </div>
       </aside>
-
-      {/* Settings Modal */}
-      <DashboardSettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </>
   )
 }

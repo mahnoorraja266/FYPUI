@@ -9,6 +9,7 @@ import EnrollmentPage from './pages/enroll/Enrollment'
 import DevicesPage from './pages/devices/Devices'
 import SyncStatusPage from './pages/sync-status/SyncStatus'
 import LiveFeedsPage from './pages/live-feed/live-feed'
+import SettingsPage from './pages/settings/Settings'
 
 export default function App() {
   const pathname = usePathname()
@@ -33,6 +34,8 @@ export default function App() {
       return <SyncStatusPage />
     case '/live-feeds':
       return <LiveFeedsPage />
+    case '/settings':
+      return <SettingsPage />
     default:
       return <LoginPage />
   }
