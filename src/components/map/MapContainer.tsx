@@ -17,6 +17,26 @@ export default function MapContainer({ selectedCameraId, onCameraSelect, filter 
     if (filter === 'alerting') return camera.isAlerting
     return true
   })
+  // Dynamic coordinates mapping based on selected camera or default values
+  const getCoordinates = () => {
+    const coordsMap: Record<string, { lat: string; lng: string; alt: string }> = {
+      'gate1': { lat: '34.0531° N', lng: '118.2442° W', alt: '50.2m MSL' },
+      'gate2': { lat: '34.0526° N', lng: '118.2435° W', alt: '53.8m MSL' },
+      'lobbynorth': { lat: '34.0519° N', lng: '118.2429° W', alt: '52.1m MSL' },
+      'parkinga': { lat: '34.0512° N', lng: '118.2449° W', alt: '48.5m MSL' },
+      'rooftop': { lat: '34.0545° N', lng: '118.2415° W', alt: '78.3m MSL' },
+      'warehouse': { lat: '34.0505° N', lng: '118.2432° W', alt: '51.4m MSL' },
+      'mainentrance': { lat: '34.0529° N', lng: '118.2450° W', alt: '49.7m MSL' },
+    }
+    
+    if (selectedCameraId && coordsMap[selectedCameraId.toLowerCase()]) {
+      return coordsMap[selectedCameraId.toLowerCase()]
+    }
+    return { lat: '34.0522° N', lng: '118.2437° W', alt: '52.4m MSL' }
+  }
+
+  const { lat, lng, alt } = getCoordinates()
+
   return (
     <div className="relative w-full h-full" style={{ backgroundColor: '#0B1020' }}>
       {/* Animated concentric circles background */}
@@ -108,10 +128,10 @@ export default function MapContainer({ selectedCameraId, onCameraSelect, filter 
       })}
 
       {/* Coordinates display */}
-      <div className="absolute bottom-6 left-6 p-4 border rounded font-mono text-xs" style={{ backgroundColor: '#121A2B', borderColor: '#24324A', color: '#94A3B8' }}>
-        <div>LAT: <span style={{ color: '#3B82F6' }}>34.0522° N</span></div>
-        <div>LNG: <span style={{ color: '#3B82F6' }}>118.2437° W</span></div>
-        <div>ALT: <span style={{ color: '#94A3B8' }}>52.4m MSL</span></div>
+      <div className="absolute bottom-6 left-6 p-4 border rounded font-mono text-xs shadow-lg" style={{ backgroundColor: '#121A2B', borderColor: '#24324A', color: '#94A3B8' }}>
+        <div>LAT: <span style={{ color: '#3B82F6' }}>{lat}</span></div>
+        <div>LNG: <span style={{ color: '#3B82F6' }}>{lng}</span></div>
+        <div>ALT: <span style={{ color: '#94A3B8' }}>{alt}</span></div>
       </div>
     </div>
   )
