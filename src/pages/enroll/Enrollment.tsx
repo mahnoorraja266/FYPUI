@@ -58,7 +58,7 @@ export default function EnrollmentPage() {
     setIsDeleting(true)
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 800))
+      await new Promise((resolve) => setTimeout(resolve, 100))
       console.log('Delete confirmed for:', personToDelete.id)
       setDeleteModalOpen(false)
       setPersonToDelete(null)

@@ -35,7 +35,7 @@ export default function RegisterDeviceModal({ isOpen, onClose, onRegister }: Reg
 
     setIsRegistering(true)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 100))
       
       // Generate device ID and API key
       const deviceId = `SN-${Math.random().toString(36).substr(2, 9).toUpperCase()}`

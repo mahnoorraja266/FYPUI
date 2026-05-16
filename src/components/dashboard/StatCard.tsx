@@ -56,7 +56,10 @@ export default function StatCard({
           )}
           {icon && (
             <div className="ml-auto text-base" style={{ color: getStatusColor() }}>
-              <icon.type size={20} />
+              {(() => {
+                const IconComp = (icon as any).type || icon;
+                return typeof IconComp === 'function' || typeof IconComp === 'object' ? <IconComp size={20} /> : icon;
+              })()}
             </div>
           )}
         </div>

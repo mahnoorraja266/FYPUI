@@ -17,7 +17,7 @@ export default function DashboardSettingsModal({ isOpen, onClose }: DashboardSet
 
   const handleSave = async () => {
     setIsSaving(true)
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise((resolve) => setTimeout(resolve, 100))
     console.log('Settings saved:', settings)
     setIsSaving(false)
     onClose()

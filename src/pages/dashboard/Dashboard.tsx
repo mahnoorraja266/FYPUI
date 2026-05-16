@@ -6,6 +6,7 @@ import StatCard from '@/components/dashboard/StatCard'
 import RecentAlerts from '@/components/dashboard/RecentAlerts'
 import SystemStatus from '@/components/dashboard/SystemStatus'
 import { useRouter } from 'next/navigation'
+import { User, Users, AlertTriangle } from 'lucide-react'
 
 export default function Dashboard() {
   const router = useRouter()
@@ -28,7 +29,7 @@ export default function Dashboard() {
           />
 
           {/* Person Recognition */}
-          <StatCard title="Person Recognition" value="1" subtitle="ACTIVE ALERT" icon="👤" status="danger">
+          <StatCard title="Person Recognition" value="1" subtitle="ACTIVE ALERT" icon={User} status="danger">
             <div
               className="mt-4 p-2 border text-xs"
               style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', borderColor: '#EF4444', color: '#EF4444' }}
@@ -42,7 +43,7 @@ export default function Dashboard() {
             title="Weapon Detection"
             value="1"
             subtitle="THREAT DETECTED"
-            icon="⚠️"
+            icon={AlertTriangle}
             status="warning"
           >
             <div
@@ -54,7 +55,7 @@ export default function Dashboard() {
           </StatCard>
 
           {/* Enrolled Database */}
-          <StatCard title="Enrolled Database" value="12" subtitle="PERSONS" icon="👥">
+          <StatCard title="Enrolled Database" value="12" subtitle="PERSONS" icon={Users}>
             <div className="mt-4 flex -space-x-2">
               {[1, 2, 3].map((i) => (
                 <div
@@ -62,7 +63,7 @@ export default function Dashboard() {
                   className="w-6 h-6 rounded-full border bg-slate-700 flex items-center justify-center text-xs"
                   style={{ borderColor: '#121A2B' }}
                 >
-                  👤
+                  <User size={12} />
                 </div>
               ))}
               <div

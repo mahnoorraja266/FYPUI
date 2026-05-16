@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { USBConnectorIcon } from '@/components/icons/USBIcon'
+import { Eye, EyeOff, Lock } from 'lucide-react'
 
 export default function USBVerification() {
   const router = useRouter()
@@ -24,7 +25,7 @@ export default function USBVerification() {
     setTimeout(() => {
       router.push('/dashboard')
       setIsLoading(false)
-    }, 500)
+    }, 100)
   }
 
   const handleCancel = () => {
@@ -109,10 +110,10 @@ export default function USBVerification() {
           <button
             type="button"
             onClick={() => setShowPin(!showPin)}
-            className="absolute right-3 text-xl"
+            className="absolute right-3 flex items-center justify-center"
             style={{ color: '#94A3B8' }}
           >
-            {showPin ? '👁' : '👁‍🗨'}
+            {showPin ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
       </div>
@@ -190,7 +191,7 @@ export default function USBVerification() {
         }}
       >
         <div className="flex items-center justify-center gap-2">
-          <span>🔒</span>
+          <Lock size={12} style={{ color: '#3B82F6' }} />
           <span>AES-256 ENCRYPTED TUNNEL</span>
           <span>SID: 099-281-SENTINEL</span>
         </div>

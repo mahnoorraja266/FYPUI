@@ -11,7 +11,7 @@ export default function SyncStatusPage() {
 
   const handleForceSyncAll = () => {
     setIsForcing(true)
-    setTimeout(() => setIsForcing(false), 1500)
+    setTimeout(() => setIsForcing(false), 100)
   }
 
   return (
