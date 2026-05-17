@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Clock, User, Zap, CheckCircle } from 'lucide-react'
 
 interface Alert {
@@ -11,7 +12,7 @@ interface Alert {
   statusColor: string
 }
 
-const ALERTS: Alert[] = [
+const INITIAL_ALERTS: Alert[] = [
   {
     id: '1',
     status: 'new',
@@ -55,10 +56,30 @@ const ALERTS: Alert[] = [
 ]
 
 export default function RecentAlerts() {
+  const [alerts, setAlerts] = useState<Alert[]>(INITIAL_ALERTS)
+
+  const handleMarkAsSeen = (id: string) => {
+    setAlerts((prev) =>
+      prev.map((a) => {
+        if (a.id === id) {
+          return {
+            ...a,
+            status: 'seen',
+            action: 'LOGS',
+          }
+        }
+        return a
+      })
+    )
+  }
+
   const getIcon = (iconType: 'user' | 'zap') => {
     if (iconType === 'user') return <User size={16} />
     return <Zap size={16} />
   }
+
+  const newAlerts = alerts.filter((a) => a.status === 'new')
+  const seenAlerts = alerts.filter((a) => a.status === 'seen')
 
   return (
     <div className="border mb-4" style={{ backgroundColor: '#121A2B', borderColor: '#24324A' }}>
@@ -69,11 +90,11 @@ export default function RecentAlerts() {
       >
         <div className="flex items-center gap-3">
           <Clock size={20} />
-          <h2 className="text-xl font-bold" style={{ color: '#E5E7EB' }}>
+          <h2 className="text-xl font-bold" style={{ color: '#E5E7EB', fontFamily: 'Inter' }}>
             RECENT ALERTS
           </h2>
         </div>
-        <a href="#" className="text-xs font-bold uppercase hover:underline" style={{ color: '#3B82F6' }}>
+        <a href="#" className="text-xs font-bold uppercase hover:underline" style={{ color: '#3B82F6', fontFamily: 'Inter' }}>
           View All Alerts
         </a>
       </div>
@@ -85,63 +106,54 @@ export default function RecentAlerts() {
             <tr style={{ backgroundColor: 'rgba(26, 37, 59, 0.3)' }}>
               <th
                 className="p-4 text-xs font-bold uppercase tracking-widest border-b"
-                style={{ color: '#94A3B8', borderColor: '#24324A' }}
+                style={{ color: '#94A3B8', borderColor: '#24324A', fontFamily: 'Inter' }}
               >
                 Status
               </th>
               <th
                 className="p-4 text-xs font-bold uppercase tracking-widest border-b"
-                style={{ color: '#94A3B8', borderColor: '#24324A' }}
+                style={{ color: '#94A3B8', borderColor: '#24324A', fontFamily: 'Inter' }}
               >
                 Type
               </th>
               <th
                 className="p-4 text-xs font-bold uppercase tracking-widest border-b"
-                style={{ color: '#94A3B8', borderColor: '#24324A' }}
+                style={{ color: '#94A3B8', borderColor: '#24324A', fontFamily: 'Inter' }}
               >
                 Location
               </th>
               <th
                 className="p-4 text-xs font-bold uppercase tracking-widest border-b"
-                style={{ color: '#94A3B8', borderColor: '#24324A' }}
+                style={{ color: '#94A3B8', borderColor: '#24324A', fontFamily: 'Inter' }}
               >
                 Timestamp
               </th>
               <th
                 className="p-4 text-xs font-bold uppercase tracking-widest border-b text-right"
-                style={{ color: '#94A3B8', borderColor: '#24324A' }}
+                style={{ color: '#94A3B8', borderColor: '#24324A', fontFamily: 'Inter' }}
               >
                 Action
               </th>
             </tr>
           </thead>
           <tbody className="divide-y" style={{ borderColor: '#24324A' }}>
-            {ALERTS.map((alert) => (
+            {/* NEW SECTION ROWS */}
+            {newAlerts.map((alert) => (
               <tr
                 key={alert.id}
-                className="hover:bg-opacity-30 transition-colors"
-                style={{ opacity: alert.status === 'seen' ? 0.7 : 1 }}
+                onClick={() => handleMarkAsSeen(alert.id)}
+                className="hover:bg-blue-500/5 transition-all duration-200 cursor-pointer"
+                title="Click to mark as seen"
               >
                 <td className="p-4">
                   <div className="flex items-center gap-2">
-                    {alert.status === 'new' ? (
-                      <>
-                        <span
-                          className="w-2 h-2 rounded-full animate-pulse"
-                          style={{ backgroundColor: alert.statusColor }}
-                        />
-                        <span className="text-xs font-bold uppercase" style={{ color: alert.statusColor }}>
-                          NEW
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <CheckCircle size={16} style={{ color: '#22C55E' }} />
-                        <span className="text-xs font-bold uppercase" style={{ color: '#94A3B8' }}>
-                          SEEN
-                        </span>
-                      </>
-                    )}
+                    <span
+                      className="w-2 h-2 rounded-full animate-pulse"
+                      style={{ backgroundColor: alert.statusColor }}
+                    />
+                    <span className="text-xs font-bold uppercase" style={{ color: alert.statusColor, fontFamily: 'Inter' }}>
+                      NEW
+                    </span>
                   </div>
                 </td>
                 <td className="p-4">
@@ -149,28 +161,90 @@ export default function RecentAlerts() {
                     <div style={{ color: '#E5E7EB' }}>
                       {getIcon(alert.iconType)}
                     </div>
-                    <span className="text-sm" style={{ color: '#E5E7EB' }}>
+                    <span className="text-sm font-semibold" style={{ color: '#E5E7EB', fontFamily: 'Inter' }}>
                       {alert.type}
                     </span>
                   </div>
                 </td>
-                <td className="p-4 text-sm" style={{ color: '#94A3B8' }}>
+                <td className="p-4 text-sm" style={{ color: '#94A3B8', fontFamily: 'Inter' }}>
                   {alert.location}
                 </td>
                 <td className="p-4 text-sm font-data-mono" style={{ color: '#94A3B8' }}>
                   {alert.timestamp}
                 </td>
                 <td className="p-4 text-right">
-                  <button
-                    className="px-3 py-1 text-xs font-bold uppercase transition-colors hover:opacity-80"
+                  <span
+                    className="px-3 py-1 text-xs font-bold uppercase rounded"
                     style={{
-                      backgroundColor: alert.action === 'REVIEW' ? '#3B82F6' : 'transparent',
-                      color: alert.action === 'REVIEW' ? 'white' : '#94A3B8',
-                      border: alert.action === 'LOGS' ? '1px solid #24324A' : 'none',
+                      backgroundColor: '#3B82F6',
+                      color: 'white',
+                      fontFamily: 'Inter',
                     }}
                   >
-                    {alert.action}
-                  </button>
+                    REVIEW
+                  </span>
+                </td>
+              </tr>
+            ))}
+
+            {/* SEPARATOR ROW */}
+            {newAlerts.length > 0 && seenAlerts.length > 0 && (
+              <tr className="bg-slate-900/10 pointer-events-none select-none">
+                <td colSpan={5} className="p-0">
+                  <div className="flex items-center gap-3 px-4 py-2.5" style={{ backgroundColor: 'rgba(26, 37, 59, 0.4)' }}>
+                    <div className="h-[1px] flex-1" style={{ backgroundColor: '#24324A' }} />
+                    <span className="text-[10px] font-bold tracking-widest text-[#94A3B8] uppercase" style={{ fontFamily: 'Inter' }}>
+                      Seen History
+                    </span>
+                    <div className="h-[1px] flex-1" style={{ backgroundColor: '#24324A' }} />
+                  </div>
+                </td>
+              </tr>
+            )}
+
+            {/* SEEN SECTION ROWS */}
+            {seenAlerts.map((alert) => (
+              <tr
+                key={alert.id}
+                className="transition-colors duration-200"
+                style={{ opacity: 0.65 }}
+              >
+                <td className="p-4">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle size={14} style={{ color: '#22C55E' }} />
+                    <span className="text-xs font-bold uppercase" style={{ color: '#94A3B8', fontFamily: 'Inter' }}>
+                      SEEN
+                    </span>
+                  </div>
+                </td>
+                <td className="p-4">
+                  <div className="flex items-center gap-2">
+                    <div style={{ color: '#E5E7EB' }}>
+                      {getIcon(alert.iconType)}
+                    </div>
+                    <span className="text-sm" style={{ color: '#E5E7EB', fontFamily: 'Inter' }}>
+                      {alert.type}
+                    </span>
+                  </div>
+                </td>
+                <td className="p-4 text-sm" style={{ color: '#94A3B8', fontFamily: 'Inter' }}>
+                  {alert.location}
+                </td>
+                <td className="p-4 text-sm font-data-mono" style={{ color: '#94A3B8' }}>
+                  {alert.timestamp}
+                </td>
+                <td className="p-4 text-right">
+                  <span
+                    className="px-3 py-1 text-xs font-bold uppercase border rounded"
+                    style={{
+                      borderColor: '#24324A',
+                      color: '#94A3B8',
+                      borderWidth: '1px',
+                      fontFamily: 'Inter',
+                    }}
+                  >
+                    LOGS
+                  </span>
                 </td>
               </tr>
             ))}
