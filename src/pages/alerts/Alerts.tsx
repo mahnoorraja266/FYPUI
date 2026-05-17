@@ -26,7 +26,7 @@ export default function AlertsPage() {
       <main className="md:ml-64 pt-12 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Page Title */}
-          <h1 className="text-3xl font-bold uppercase tracking-wide mb-8" style={{ color: '#E5E7EB' }}>
+          <h1 className="text-3xl font-bold uppercase tracking-wide mb-8 mt-6" style={{ color: '#E5E7EB', fontFamily: 'Inter' }}>
             Alerts
           </h1>
 
