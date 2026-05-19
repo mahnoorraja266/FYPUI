@@ -11,7 +11,7 @@ export default function DeviceStreamTable({
   currentPage: number
   onPageChange: (page: number) => void
 }) {
-  // Dual Stream Slots: slot1 (pre-selected to first online device) and slot2 (null initially)
+  // Fix 3: Dual Stream Slots: slot1 (pre-selected to first online device) and slot2 (null initially)
   const onlineDevices = DEVICES.filter(d => d.status === 'online')
   const defaultDevice = onlineDevices[0] || DEVICES[0]
 
