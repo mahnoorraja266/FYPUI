@@ -13,6 +13,15 @@ export default function FilterBar({ onRefresh }: FilterBarProps) {
   const [statusFilter, setStatusFilter] = useState('active')
   const [deviceFilter, setDeviceFilter] = useState('all')
 
+  const [fromDate, setFromDate] = useState('')
+  const [toDate, setToDate] = useState('')
+
+  const handleDateChange = (val: string, setter: (v: string) => void) => {
+    // Restrict input to digits and slashes only
+    const sanitized = val.replace(/[^0-9/]/g, '')
+    setter(sanitized)
+  }
+
   return (
     <div className="space-y-4 mb-6">
       {/* Filter Row */}
@@ -79,6 +88,8 @@ export default function FilterBar({ onRefresh }: FilterBarProps) {
             <input
               type="text"
               placeholder="mm/dd/yyyy"
+              value={fromDate}
+              onChange={(e) => handleDateChange(e.target.value, setFromDate)}
               className="w-full px-3 py-2 rounded border text-sm"
               style={{ backgroundColor: '#1A253B', borderColor: '#24324A', color: '#E5E7EB' }}
             />
@@ -90,6 +101,8 @@ export default function FilterBar({ onRefresh }: FilterBarProps) {
             <input
               type="text"
               placeholder="mm/dd/yyyy"
+              value={toDate}
+              onChange={(e) => handleDateChange(e.target.value, setToDate)}
               className="w-full px-3 py-2 rounded border text-sm"
               style={{ backgroundColor: '#1A253B', borderColor: '#24324A', color: '#E5E7EB' }}
             />
