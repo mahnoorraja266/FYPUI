@@ -44,7 +44,7 @@ export default function DeviceStreamTable({
     return () => clearInterval(timer)
   }, [])
 
-  // Simulator for WebSocket overlay toggles with 100ms latency simulation
+  // Fix 4: Simulator for WebSocket overlay toggles with 100ms latency simulation
   const handleToggleFace1 = () => {
     setLoading1(true)
     setTimeout(() => {
