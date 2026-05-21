@@ -54,8 +54,13 @@ export default function LiveFeedsPage() {
           </button>
         </div>
 
-        {activeTab === 'live' && <DeviceStreamTable currentPage={currentPage} onPageChange={setCurrentPage} />}
-        {activeTab === 'recordings' && <RecordingsTab />}
+        {/* Fix 5: Keep active streams alive between tab switches via display: none */}
+        <div style={{ display: activeTab === 'live' ? 'block' : 'none' }}>
+          <DeviceStreamTable currentPage={currentPage} onPageChange={setCurrentPage} />
+        </div>
+        <div style={{ display: activeTab === 'recordings' ? 'block' : 'none' }}>
+          <RecordingsTab />
+        </div>
       </main>
     </div>
   )
