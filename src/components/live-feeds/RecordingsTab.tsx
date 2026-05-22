@@ -12,6 +12,19 @@ export default function RecordingsTab() {
   const [selectedRecording, setSelectedRecording] = useState<any>(null)
   const [isPlayerOpen, setIsPlayerOpen] = useState(false)
 
+  const [isRecording, setIsRecording] = useState(true)
+  const [isToggling, setIsToggling] = useState(false)
+
+  const handleToggleRecording = () => {
+    setIsToggling(true)
+    setTimeout(() => {
+      const nextState = !isRecording
+      setIsRecording(nextState)
+      setIsToggling(false)
+      console.log(`${nextState ? 'START_RECORDING' : 'STOP_RECORDING'} sent successfully for device:`, selectedDevice)
+    }, 100)
+  }
+
   const selectedDeviceName = DEVICES.find((d) => d.id === selectedDevice)?.name || 'Gate 1 Camera'
   const filteredRecordings = RECORDINGS.filter((r) => r.deviceId === selectedDevice)
 
@@ -185,10 +198,31 @@ export default function RecordingsTab() {
           <div className="text-xs uppercase tracking-widest" style={{ color: '#94A3B8' }}>
             Retention: <span style={{ color: '#E5E7EB' }}>7 days</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#22C55E' }} />
-            <span className="text-xs uppercase tracking-widest" style={{ color: '#94A3B8' }}>
-              Recording: <span style={{ color: '#22C55E' }}>ON</span>
+          <div className="flex items-center gap-2.5">
+            <span className="text-xs uppercase tracking-widest" style={{ color: '#94A3B8', fontFamily: 'Inter' }}>
+              Recording:
+            </span>
+            <button
+              onClick={handleToggleRecording}
+              disabled={isToggling}
+              className="relative w-10 h-5.5 rounded-full transition-all flex-shrink-0 cursor-pointer disabled:opacity-50"
+              style={{
+                backgroundColor: isRecording ? '#22C55E' : '#424754',
+              }}
+            >
+              <div
+                className="absolute top-0.5 w-4.5 h-4.5 rounded-full transition-transform"
+                style={{
+                  backgroundColor: '#FFF',
+                  transform: isRecording ? 'translateX(20px)' : 'translateX(2px)',
+                }}
+              />
+            </button>
+            <span 
+              className="text-[10px] font-mono font-bold tracking-wider" 
+              style={{ color: isRecording ? '#22C55E' : '#94A3B8' }}
+            >
+              {isToggling ? 'SENDING...' : isRecording ? 'ACTIVE' : 'STOPPED'}
             </span>
           </div>
         </div>
