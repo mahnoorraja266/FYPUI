@@ -72,3 +72,7 @@ docs/build/
 
 # Mac/Linux hidden files
 .*.sw?
+
+# readme files 
+TOFIX.MD
+ui_specs.md
